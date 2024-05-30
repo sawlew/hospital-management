@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}Edit Appointment{% endblock %}
+{% block content %}
+<div class="navigation-buttons">
+    <a href="#" class="previous round" onclick="goBack()">&#8249;</a>
+    <a href="#" class="next round" onclick="goForward()">&#8250;</a>
+</div>
+
+<script>
+function goBack() {
+    window.history.back();
+}
+function goForward() {
+    history.forward();
+}
+</script>
+<div class="container">
+    <h2>Edit Appointment</h2>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.patient_id.label }}:
+            {{ form.patient_id(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.date.label }}:
+            {{ form.date(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.time.label }}:
+            {{ form.time(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.reason.label }}:
+            {{ form.reason(class="form-control") }}
+        </div>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+</div>
+<div class="mini-nav">
+    <ul>
+        <li><a href="{{ url_for('add_patient') }}">Add Patient</a></li>
+        <li><a href="{{ url_for('view_patients') }}">View Patients</a></li>
+        <li><a href="{{ url_for('add_appointment') }}">Schedule Appointment</a></li>
+        <li><a href="{{ url_for('view_appointments') }}">View Appointments</a></li>
+        <li><a href="{{ url_for('predictions') }}">Predict Availability</a></li>
+    </ul>
+</div>
+{% endblock %}

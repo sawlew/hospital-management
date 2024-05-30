@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="navigation-buttons">
+    <a href="#" class="previous round" onclick="goBack()"><i class="fas fa-arrow-left"></i></a>
+    <a href="#" class="next round" onclick="goForward()"><i class="fas fa-arrow-right"></i></a>
+</div>
+
+<script>
+function goBack() {
+    window.history.back();
+}
+function goForward() {
+    history.forward();
+}
+</script>
+
+<div class="dashboard-container">
+    <h2>Dashboard</h2>
+    <ul class="dashboard-menu">
+        <li><a href="{{ url_for('add_patient') }}">Add Patient</a></li>
+        <li><a href="{{ url_for('view_patients') }}">View Patients</a></li>
+        <li><a href="{{ url_for('add_appointment') }}">Schedule Appointment</a></li>
+        <li><a href="{{ url_for('view_appointments') }}">View Appointments</a></li>
+        <li><a href="{{ url_for('predictions') }}">Predict Availability</a></li>
+    </ul>
+</div>
+{% endblock %}

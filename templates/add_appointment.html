@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %}Schedule Appointment{% endblock %}
+{% block content %}
+<div class="navigation-buttons">
+    <a href="#" class="previous round" onclick="goBack()">&#8249;</a>
+    <a href="#" class="next round" onclick="goForward()">&#8250;</a>
+</div>
+
+<script>
+function goBack() {
+    window.history.back();
+}
+function goForward() {
+    history.forward();
+}
+</script>
+
+<h2>Schedule Appointment</h2>
+<form method="POST" action="{{ url_for('add_appointment') }}">
+    {{ form.hidden_tag() }}
+    <div>
+        {{ form.patient_id.label }}<br>
+        {{ form.patient_id(class_='form-control', placeholder='Enter Patient ID') }}
+    </div>
+    <div>
+        {{ form.date.label }}<br>
+        {{ form.date(class_='form-control', placeholder='Select Date') }}
+    </div>
+    <div>
+        {{ form.time.label }}<br>
+        {{ form.time(class_='form-control', placeholder='Select Time') }}
+    </div>
+    <div>
+        {{ form.reason.label }}<br>
+        {{ form.reason(class_='form-control', placeholder='Enter Reason for Appointment') }}
+    </div>
+    <div>
+        {{ form.submit(class_='btn') }}
+    </div>
+</form>
+
+<div class="mini-nav">
+    <ul>
+        <li><a href="{{ url_for('add_patient') }}">Add Patient</a></li>
+        <li><a href="{{ url_for('view_patients') }}">View Patients</a></li>
+        <li><a href="{{ url_for('add_appointment') }}">Schedule Appointment</a></li>
+        <li><a href="{{ url_for('view_appointments') }}">View Appointments</a></li>
+        <li><a href="{{ url_for('predictions') }}">Predict Availability</a></li>
+    </ul>
+</div>
+{% endblock %}

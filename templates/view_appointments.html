@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block title %}View Appointments{% endblock %}
+{% block content %}
+<div class="navigation-buttons">
+    <a href="#" class="previous round" onclick="goBack()">&#8249;</a>
+    <a href="#" class="next round" onclick="goForward()">&#8250;</a>
+</div>
+
+<script>
+function goBack() {
+    window.history.back();
+}
+function goForward() {
+    history.forward();
+}
+</script>
+
+<h2>View Appointments</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Appointment ID</th>
+            <th>Patient ID</th>
+            <th>Patient Name</th>
+            <th>Patient Age</th>
+            <th>Patient Address</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Reason</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for appointment, patient in appointments %}
+        <tr>
+            <td>{{ appointment.id }}</td>
+            <td>{{ patient.id }}</td>
+            <td>{{ patient.name }}</td>
+            <td>{{ patient.age }}</td>
+            <td>{{ patient.address }}</td>
+            <td>{{ appointment.date }}</td>
+            <td>{{ appointment.time }}</td>
+            <td>{{ appointment.reason }}</td>
+            <td>
+                <a href="{{ url_for('edit_appointment', id=appointment.id) }}" class="btn btn-primary">Edit</a>
+                <form action="{{ url_for('delete_appointment', id=appointment.id) }}" method="post" style="display: inline;">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="mini-nav">
+    <ul>
+        <li><a href="{{ url_for('add_patient') }}">Add Patient</a></li>
+        <li><a href="{{ url_for('view_patients') }}">View Patients</a></li>
+        <li><a href="{{ url_for('add_appointment') }}">Schedule Appointment</a></li>
+        <li><a href="{{ url_for('view_appointments') }}">View Appointments</a></li>
+        <li><a href="{{ url_for('predictions') }}">Predict Availability</a></li>
+    </ul>
+</div>
+{% endblock %}

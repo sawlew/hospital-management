@@ -1,0 +1,15 @@
+>> install python
+>> install pip if not working
+>> python.exe -m pip install --upgrade pip
+>> pip install Flask Flask-SQLAlchemy Flask-WTF Flask-Bcrypt Flask-Login pandas scikit-learn joblib
+
+>> CD to location
+>> run app.py
+
+set FLASK_APP=app.py
+set FLASK_ENV=development
+flask db init
+flask db migrate -m "Initial migration."
+flask db upgrade
+
+>> run http://127.0.0.1:5000 on browser

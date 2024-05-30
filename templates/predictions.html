@@ -1,0 +1,114 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predict No-Show</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+{% extends 'base.html' %}
+{% block title %}Predict No-Show{% endblock %}
+{% block content %}
+<div class="navigation-buttons">
+    <a href="#" class="previous round" onclick="goBack()">&#8249;</a>
+    <a href="#" class="next round" onclick="goForward()">&#8250;</a>
+</div>
+
+<script>
+function goBack() {
+    window.history.back();
+}
+function goForward() {
+    history.forward();
+}
+</script>
+
+<h2>Predict Availability</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Appointment ID</th>
+            <th>Patient ID</th>
+            <th>Patient Name</th>
+            <th>Patient Age</th>
+            <th>Patient Address</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Reason</th>
+            <th>Predict</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for appointment, patient in appointments %}
+        <tr>
+            <td>{{ appointment.id }}</td>
+            <td>{{ patient.id }}</td>
+            <td>{{ patient.name }}</td>
+            <td>{{ patient.age }}</td>
+            <td>{{ patient.address }}</td>
+            <td>{{ appointment.date }}</td>
+            <td>{{ appointment.time }}</td>
+            <td>{{ appointment.reason }}</td>
+            <td>
+               <button class="btn btn-primary predict-no-show" data-time="{{ appointment.time }}">Predict No-Show</button> 
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="mini-nav">
+    <ul>
+        <li><a href="{{ url_for('add_patient') }}">Add Patient</a></li>
+        <li><a href="{{ url_for('view_patients') }}">View Patients</a></li>
+        <li><a href="{{ url_for('add_appointment') }}">Schedule Appointment</a></li>
+        <li><a href="{{ url_for('view_appointments') }}">View Appointments</a></li>
+        <li><a href="{{ url_for('predictions') }}">Predict Availability</a></li>
+    </ul>
+</div>
+
+<!-- Bootstrap Modal -->
+<div class="modal fade" id="predictionModal" tabindex="-1" role="dialog" aria-labelledby="predictionModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="predictionModalLabel">Prediction Result</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="predictionModalBody">
+        <!-- Prediction result will be inserted here -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const predictButtons = document.querySelectorAll('.predict-no-show');
+        predictButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                const time = this.getAttribute('data-time');
+                const appointmentTime = new Date('1970-01-01T' + time + 'Z'); // Convert to a Date object
+
+                let prediction;
+                if (appointmentTime.getUTCHours() >= 9 && appointmentTime.getUTCHours() < 16) {
+                    prediction = 'Likely to Show up';
+                } else {
+                    prediction = 'Likely to Not Show up';
+                }
+
+                // Update the modal content
+                document.getElementById('predictionModalBody').innerText = prediction;
+                // Show the modal
+                $('#predictionModal').modal('show');
+            });
+        });
+    });
+</script>
+{% endblock %}

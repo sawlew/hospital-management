@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Welcome | Hospital Management System{% endblock %}
+{% block content %}
+<div class="hero-section">
+    <div class="hero-content">
+        <h1>Welcome to G4 Hospital Management System</h1>
+        <p>Manage your hospital operations seamlessly and efficiently with our advanced system.</p>
+        <a class="btn get-started-btn" href="{{ url_for('login') }}">Get Started &#8250;</a>
+    </div>
+</div>
+{% endblock %}
